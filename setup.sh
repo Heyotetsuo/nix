@@ -67,6 +67,8 @@ $pkg $install exiftool;
 
 ####### CONFIGS ########
 cp -nv vimrc ~/.vimrc;
+cp -nv zshrc ~/.zshrc;
+cp -nv bashrc ~/.bashrc;
 cp -nv tmux.conf ~/.tmux.conf;
 
 ####### DEV ENVIRONMENT ######
