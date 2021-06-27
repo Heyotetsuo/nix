@@ -40,10 +40,12 @@ pkgs="tree tmux";
 
 # web
 pkgsui="firefox";
-pkgs="$pkgs links";
+pkgs="$pkgs links telegram-cli";
 
 # development
-pkgs="$pkgs nasm yasm python3 nodejs npm html-xml-utils jq python python3 python3-pip";
+pkgs="$pkgs nasm yasm html-xml-utils jq";
+pkgs="$pkgs python python3 python3-pip";
+pkgs="$pkgs nodejs npm";
 
 # multimedia
 pkgs="$pkgs imagemagick ffmpeg youtube-dl mpv aria2 exiftool";
@@ -72,8 +74,14 @@ do
 done;
 
 ####### SECONDARY INSTALLS #######
-pip3 install catt;
-sudo npm install -g jshint;
+if ! command -v catt >/dev/null;
+then
+	pip3 install catt;
+fi;
+if ! command -v catt >/dev/null;
+then
+	sudo npm install -g jshint;
+fi;
 
 ####### CONFIGS ########
 configs="vimrc zshrc bashrc tmux.conf";
