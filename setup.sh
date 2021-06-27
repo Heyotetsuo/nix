@@ -32,37 +32,69 @@ then
 	remove='delete';
 fi;
 
-$pkg $update;
-$pkg $upgrade;
+yes | $pkg $update;
+yes | $pkg $upgrade;
 
 # basics
-pkgs=(tree tmux);
+pkgs="tree tmux";
 
 # web
-pkgsui=(firefox);
-pkgs=(${pkgs[@]} links);
+pkgsui="firefox";
+pkgs="$pkgs links";
 
 # development
-pkgs=(${pkgs[@]} nasm yasm python3 node html-xml-utils jq);
+pkgs="$pkgs nasm yasm python3 nodejs npm html-xml-utils jq python python3 python3-pip";
 
 # multimedia
-pkgs=(${pkgs[@]} imagemagick ffmpeg youtube-dlc mpv aria2 exiftool);
+pkgs="$pkgs imagemagick ffmpeg youtube-dl mpv aria2 exiftool";
 
 # security -- careful with this on a company computer
-# ${pkgs[@]}=($pkgs nmap wireshark hexedit);
+pkgs="$pkgs nmap wireshark hexedit";
 
 # execute installs
-yes | $pkg install ${pkgs[@]};
-yes | $pkgui ${pkgsui[@]};
+for p in $pkgs;
+do
+	if command -v $p >/dev/null;
+	then
+		echo "$p: already installed";
+	else
+		yes | $pkg install $p;
+	fi;
+done;
+for p in $pkgsui;
+do
+	if command -v $p >/dev/null;
+	then
+		echo "$p: already installed";
+	else
+		yes | $pkgui install $p;
+	fi;
+done;
+
+####### SECONDARY INSTALLS #######
+pip3 install catt;
+sudo npm install -g jshint;
 
 ####### CONFIGS ########
-cp -nv vimrc ~/.vimrc;
-cp -nv zshrc ~/.zshrc;
-cp -nv bashrc ~/.bashrc;
-cp -nv tmux.conf ~/.tmux.conf;
+configs="vimrc zshrc bashrc tmux.conf";
+for f in $configs;
+do
+	if ! [ -f ~/.$f ] || [ -z "$(grep "Manny Morales Config" ~/.$f)" ];
+	then
+		if [ $f == vimrc ];
+		then
+			echo '" Manny Morales Config' >> ~/.$f;
+		else
+			echo "# Manny Morales Config" >> ~/.$f;
+		fi;
+		cat $f >> ~/.$f;
+	fi;
+done;
 
 ####### DEV ENVIRONMENT ######
-mkdir -vp ~/Desktop/mine/bin;
-mkdir -vp ~/Desktop/mine/proj;
-mkdir -vp ~/Desktop/mine/docs;
-mkdir -vp ~/Desktop/mine/backup;
+subdirs="bin clients docs backup";
+for dir in $subdirs;
+do
+	# mkdir -vp ~/Desktop/mine/$dir;
+	mkdir -vp ~/manny/$dir;
+done;
