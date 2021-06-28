@@ -40,7 +40,10 @@ pkgs="tree tmux";
 
 # web
 pkgsui="firefox";
-pkgs="$pkgs links telegram-cli";
+pkgs="$pkgs links aria2 telegram-cli";
+
+# networking
+pkgs="$pkgs net-tools";
 
 # development
 pkgs="$pkgs nasm yasm html-xml-utils jq";
@@ -50,7 +53,7 @@ pkgs="$pkgs nodejs npm";
 # multimedia
 pkgs="$pkgs imagemagick ffmpeg youtube-dl mpv aria2 exiftool";
 
-# security -- careful with this on a company computer
+# network security -- careful with this on a company computer
 pkgs="$pkgs nmap wireshark hexedit";
 
 # execute installs
