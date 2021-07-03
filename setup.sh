@@ -87,7 +87,7 @@ then
 fi;
 
 ####### CONFIGS ########
-configs="vimrc zshrc bashrc tmux.conf";
+configs="vimrc tmux.conf";
 for f in $configs;
 do
 	if ! [ -f ~/.$f ] || [ -z "$(grep "Manny Morales Config" ~/.$f)" ];
